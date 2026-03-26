@@ -3,1401 +3,437 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>에즈금융서비스 ETMR - Redesign</title>
+  <title>에즈금융서비스 ETMR</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#f0f4f8;--card:#fff;--text:#1a202c;--sub:#64748b;
+      --border:#e2e8f0;--primary:#2563eb;--primary-light:#dbeafe;
+      --chrome:#4285f4;--edge:#0078d4;
+      --radius:14px;--shadow:0 1px 3px rgba(0,0,0,.06);
+    }
+    body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
 
-    :root {
-      --primary: #2563eb;
-      --primary-dark: #1d4ed8;
-      --primary-light: #dbeafe;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text: #0f172a;
-      --text-secondary: #64748b;
-      --border: #e2e8f0;
-      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
-      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
-      --radius: 12px;
-      --radius-sm: 8px;
-    }
+    /* === HEADER === */
+    .header{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
+    .header-inner{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+    .logo-area{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+    .logo-area span{font-weight:800;font-size:18px}
+    .logo-area small{color:var(--sub);font-weight:400;font-size:12px}
+    .header-links{display:flex;gap:8px}
+    .header-links a{padding:7px 14px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;border:1px solid var(--border);color:var(--sub);transition:.15s}
+    .header-links a:hover{border-color:var(--primary);color:var(--primary)}
+    .header-links a.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
 
-    body {
-      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
+    /* === HERO === */
+    .hero{background:linear-gradient(135deg,#1e3a5f,#2563eb 60%,#3b82f6);padding:40px 20px;text-align:center;color:#fff}
+    .hero h1{font-size:26px;font-weight:800;margin-bottom:6px}
+    .hero p{font-size:14px;opacity:.85;margin-bottom:20px}
+    .search-wrap{max-width:480px;margin:0 auto;position:relative}
+    .search-wrap input{width:100%;padding:13px 44px 13px 18px;border:none;border-radius:50px;font-size:14px;font-family:inherit;background:rgba(255,255,255,.95);outline:none;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+    .search-wrap input::placeholder{color:#94a3b8}
+    .search-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--primary)}
 
-    /* ===== HEADER ===== */
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .header-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 24px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--text);
-    }
-    .logo img { height: 36px; }
-    .logo-text { font-weight: 700; font-size: 18px; }
-    .logo-sub { font-size: 12px; color: var(--text-secondary); font-weight: 400; }
+    /* === BROWSER LEGEND === */
+    .legend{display:flex;justify-content:center;gap:20px;padding:14px 20px;background:#fff;border-bottom:1px solid var(--border)}
+    .legend-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--sub)}
+    .legend-dot{width:10px;height:10px;border-radius:50%}
+    .legend-dot.chrome{background:var(--chrome)}
+    .legend-dot.edge{background:var(--edge)}
 
-    .header-actions {
-      display: flex;
-      gap: 8px;
-    }
-    .header-btn {
-      padding: 8px 16px;
-      border-radius: var(--radius-sm);
-      font-size: 13px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: all 0.15s;
-      border: 1px solid var(--border);
-      color: var(--text-secondary);
-      background: white;
-    }
-    .header-btn:hover { border-color: var(--primary); color: var(--primary); }
-    .header-btn.primary {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-    }
-    .header-btn.primary:hover { background: var(--primary-dark); }
+    /* === TABS === */
+    .tabs{position:sticky;top:52px;z-index:90;background:#fff;border-bottom:1px solid var(--border)}
+    .tabs-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+    .tabs-inner::-webkit-scrollbar{display:none}
+    .tab{padding:12px 20px;font-size:14px;font-weight:500;color:var(--sub);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;white-space:nowrap;transition:.15s}
+    .tab:hover{color:var(--text)}
+    .tab.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}
+    .tab .badge{font-size:11px;font-weight:700;background:var(--primary-light);color:var(--primary);padding:1px 7px;border-radius:10px;margin-left:4px}
+    .tab.active .badge{background:var(--primary);color:#fff}
 
-    /* ===== HERO ===== */
-    .hero {
-      background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #3b82f6 100%);
-      padding: 48px 24px 40px;
-      color: white;
-      text-align: center;
-    }
-    .hero h1 {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .hero p {
-      font-size: 15px;
-      opacity: 0.85;
-      margin-bottom: 24px;
-    }
+    /* === MAIN === */
+    .main{max-width:1200px;margin:0 auto;padding:24px 20px}
+    .section{display:none}
+    .section.active{display:block}
 
-    /* Search */
-    .search-container {
-      max-width: 560px;
-      margin: 0 auto 24px;
-      position: relative;
-    }
-    .search-input {
-      width: 100%;
-      padding: 14px 48px 14px 20px;
-      border: none;
-      border-radius: 50px;
-      font-size: 15px;
-      font-family: inherit;
-      background: rgba(255,255,255,0.95);
-      color: var(--text);
-      outline: none;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    }
-    .search-input::placeholder { color: #94a3b8; }
-    .search-icon {
-      position: absolute;
-      right: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--primary);
-      font-size: 20px;
-      pointer-events: none;
-    }
+    /* === CARD GRID === */
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
 
-    /* Quick CTA */
-    .quick-links {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
+    /* === COMPANY CARD === */
+    .company-card{
+      background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+      padding:16px 12px;text-align:center;cursor:pointer;position:relative;
+      transition:all .2s;display:flex;flex-direction:column;align-items:center;
     }
-    .quick-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 18px;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 50px;
-      color: white;
-      font-size: 13px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: all 0.15s;
-      white-space: nowrap;
-    }
-    .quick-link:hover {
-      background: rgba(255,255,255,0.25);
-      border-color: rgba(255,255,255,0.4);
-    }
+    .company-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.08);transform:translateY(-2px);border-color:#cbd5e1}
+    .company-card.open{border-color:var(--primary);box-shadow:0 6px 20px rgba(37,99,235,.12)}
 
-    /* ===== TABS ===== */
-    .tabs-container {
-      position: sticky;
-      top: 64px;
-      z-index: 90;
-      background: white;
-      border-bottom: 1px solid var(--border);
+    /* Browser indicator dot */
+    .browser-dot{
+      position:absolute;top:8px;left:8px;width:12px;height:12px;border-radius:50%;
+      border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.15);
     }
-    .tabs {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      gap: 0;
-      overflow-x: auto;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    .tabs::-webkit-scrollbar { display: none; }
-    .tab {
-      padding: 14px 24px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      white-space: nowrap;
-      transition: all 0.15s;
-      user-select: none;
-    }
-    .tab:hover { color: var(--text); }
-    .tab.active {
-      color: var(--primary);
-      border-bottom-color: var(--primary);
-      font-weight: 600;
-    }
-    .tab .badge {
-      display: inline-block;
-      background: var(--primary-light);
-      color: var(--primary);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 1px 7px;
-      border-radius: 10px;
-      margin-left: 6px;
-    }
-    .tab.active .badge {
-      background: var(--primary);
-      color: white;
-    }
+    .browser-dot.chrome{background:var(--chrome)}
+    .browser-dot.edge{background:var(--edge)}
 
-    /* ===== MAIN CONTENT ===== */
-    .main {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 24px;
-    }
+    /* Logo */
+    .card-logo{width:100%;height:56px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+    .card-logo img{max-width:120px;max-height:48px;object-fit:contain}
+    .card-logo .fallback{font-size:14px;font-weight:700;color:var(--text)}
 
-    .section-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    /* Name */
+    .card-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+    .card-phone{font-size:11px;color:var(--sub);margin-bottom:8px}
 
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 16px;
-      margin-bottom: 32px;
+    /* Open button */
+    .card-link{
+      display:inline-flex;align-items:center;gap:4px;
+      padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;
+      text-decoration:none;transition:.15s;
     }
+    .card-link.chrome-link{background:#e8f0fe;color:var(--chrome)}
+    .card-link.chrome-link:hover{background:#4285f4;color:#fff}
+    .card-link.edge-link{background:#e3f2fd;color:var(--edge)}
+    .card-link.edge-link:hover{background:#0078d4;color:#fff}
 
-    /* ===== COMPANY CARD ===== */
-    .company-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-    .company-card:hover {
-      box-shadow: var(--shadow-lg);
-      border-color: #cbd5e1;
-      transform: translateY(-1px);
-    }
-    .company-card.expanded {
-      box-shadow: var(--shadow-lg);
-      border-color: var(--primary);
-    }
+    /* Expand area */
+    .card-detail{display:none;width:100%;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);text-align:left}
+    .company-card.open .card-detail{display:block}
+    .detail-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:12px}
+    .detail-label{color:var(--sub)}
+    .detail-value{font-weight:500}
+    .detail-value a{color:var(--primary);text-decoration:none}
+    .detail-value a:hover{text-decoration:underline}
 
-    .card-header {
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+    /* More button */
+    .more-btn{
+      border:none;background:none;color:var(--sub);cursor:pointer;font-size:16px;
+      padding:2px 6px;border-radius:4px;transition:.15s;margin-top:4px;
     }
-    .card-logo {
-      height: 32px;
-      max-width: 180px;
-      object-fit: contain;
-    }
-    .card-toggle {
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: var(--bg);
-      color: var(--text-secondary);
-      transition: all 0.2s;
-      flex-shrink: 0;
-    }
-    .company-card.expanded .card-toggle {
-      background: var(--primary-light);
-      color: var(--primary);
-      transform: rotate(180deg);
-    }
+    .more-btn:hover{background:var(--primary-light);color:var(--primary)}
 
-    .card-body {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-    .company-card.expanded .card-body {
-      max-height: 600px;
-    }
+    /* === LINKS SECTION === */
+    .links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+    .link-card{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--text);transition:.15s}
+    .link-card:hover{border-color:var(--primary);background:var(--primary-light)}
+    .link-icon{font-size:20px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--bg);border-radius:8px;flex-shrink:0}
+    .link-text{font-size:13px;font-weight:500}
 
-    .card-content {
-      padding: 0 20px 20px;
-    }
+    /* === NO RESULTS === */
+    .no-results{display:none;text-align:center;padding:40px;color:var(--sub)}
+    .no-results.show{display:block}
 
-    .info-section {
-      margin-bottom: 12px;
-    }
-    .info-section-title {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid var(--border);
-    }
+    /* === SCROLL TOP === */
+    .scroll-top{position:fixed;bottom:20px;right:20px;width:40px;height:40px;background:var(--primary);color:#fff;border:none;border-radius:50%;font-size:18px;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.15);z-index:50}
+    .scroll-top.show{display:flex}
 
-    .info-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 0;
-    }
-    .info-label {
-      font-size: 13px;
-      color: var(--text-secondary);
-      flex-shrink: 0;
-    }
-    .info-value {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text);
-      text-decoration: none;
-    }
-    .info-value.link {
-      color: var(--primary);
-      cursor: pointer;
-    }
-    .info-value.link:hover {
-      text-decoration: underline;
-    }
-    .info-value.phone {
-      font-variant-numeric: tabular-nums;
-    }
+    /* === FOOTER === */
+    .footer{text-align:center;padding:24px;color:var(--sub);font-size:12px;border-top:1px solid var(--border);margin-top:32px}
 
-    .tool-buttons {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 4px;
-    }
-    .tool-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 14px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text);
-      text-decoration: none;
-      transition: all 0.15s;
-    }
-    .tool-btn:hover {
-      background: var(--primary-light);
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-    .tool-btn img {
-      width: 16px;
-      height: 16px;
-    }
-    .tool-icon {
-      font-size: 14px;
-    }
-
-    /* ===== 영업모음 Section ===== */
-    .sales-section {
-      margin-top: 8px;
-    }
-    .sales-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 12px;
-    }
-    .sales-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      text-decoration: none;
-      color: var(--text);
-      transition: all 0.15s;
-    }
-    .sales-item:hover {
-      border-color: var(--primary);
-      background: var(--primary-light);
-    }
-    .sales-icon {
-      font-size: 20px;
-      flex-shrink: 0;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg);
-      border-radius: var(--radius-sm);
-    }
-    .sales-text {
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    /* ===== FOOTER ===== */
-    .footer {
-      text-align: center;
-      padding: 32px 24px;
-      color: var(--text-secondary);
-      font-size: 13px;
-      border-top: 1px solid var(--border);
-      margin-top: 40px;
-    }
-
-    /* ===== NO RESULTS ===== */
-    .no-results {
-      text-align: center;
-      padding: 60px 24px;
-      color: var(--text-secondary);
-    }
-    .no-results-icon { font-size: 48px; margin-bottom: 12px; }
-    .no-results-text { font-size: 15px; }
-
-    /* ===== SCROLL TO TOP ===== */
-    .scroll-top {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 44px;
-      height: 44px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      font-size: 20px;
-      cursor: pointer;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow-lg);
-      transition: all 0.2s;
-      z-index: 50;
-    }
-    .scroll-top:hover { background: var(--primary-dark); transform: scale(1.05); }
-    .scroll-top.visible { display: flex; }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 768px) {
-      .header-inner { padding: 0 16px; }
-      .header-actions { display: none; }
-      .hero { padding: 32px 16px 28px; }
-      .hero h1 { font-size: 22px; }
-      .main { padding: 16px; }
-      .cards-grid { grid-template-columns: 1fr; gap: 12px; }
-      .sales-grid { grid-template-columns: 1fr; }
-      .tab { padding: 12px 16px; font-size: 13px; }
-      .quick-links { gap: 8px; }
-      .quick-link { font-size: 12px; padding: 6px 14px; }
-    }
-
-    /* ===== ANIMATION ===== */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .company-card {
-      animation: fadeIn 0.3s ease forwards;
+    /* === RESPONSIVE === */
+    @media(max-width:640px){
+      .header-links{display:none}
+      .hero h1{font-size:20px}
+      .card-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+      .company-card{padding:12px 8px}
+      .card-logo img{max-height:36px}
+      .links-grid{grid-template-columns:1fr}
+      .tab{padding:10px 14px;font-size:13px}
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="header-inner">
-      <a href="#" class="logo">
-        <img src="https://cdn.imweb.me/thumbnail/20251002/42d1aab243d26.png" alt="에즈금융서비스 ETMR">
-        <div>
-          <div class="logo-text">에즈금융서비스 ETMR</div>
-        </div>
-      </a>
-      <div class="header-actions">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmhgk1gQFDp3rLyWvbRMR-knD_6KiBaWbylB9VvWC82ubtbw/viewform" target="_blank" class="header-btn">오류수정 요청</a>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQNilDOXdDTKuZnfJFgl8CYX1e6xodpriaaz0KPZSAssZEyQ/viewform" target="_blank" class="header-btn primary">면접신청</a>
-      </div>
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo-area">
+      <span>에즈금융서비스 ETMR</span>
+      <small>영업지원 툴사이트</small>
+    </a>
+    <div class="header-links">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmhgk1gQFDp3rLyWvbRMR-knD_6KiBaWbylB9VvWC82ubtbw/viewform" target="_blank">오류수정 요청</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQNilDOXdDTKuZnfJFgl8CYX1e6xodpriaaz0KPZSAssZEyQ/viewform" target="_blank" class="primary">면접신청</a>
     </div>
-  </header>
+  </div>
+</header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h1>에즈인을 위한 영업지원 툴사이트</h1>
-    <p>보험사 연락처, 영업지원 도구를 빠르게 찾아보세요</p>
-    <div class="search-container">
-      <input type="text" class="search-input" id="searchInput" placeholder="보험사명으로 검색 (예: KB, 삼성, 한화...)">
-      <span class="search-icon">🔍</span>
-    </div>
-    <div class="quick-links">
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQNilDOXdDTKuZnfJFgl8CYX1e6xodpriaaz0KPZSAssZEyQ/viewform" target="_blank" class="quick-link">📞 면접신청</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmhgk1gQFDp3rLyWvbRMR-knD_6KiBaWbylB9VvWC82ubtbw/viewform" target="_blank" class="quick-link">📤 오류수정 요청</a>
-      <a href="https://malachite-lizard-456.notion.site/1770e0f96b7980daaf99ef25afda5298" target="_blank" class="quick-link">📌 퍼스트지점 소개</a>
-    </div>
-  </section>
+<section class="hero">
+  <h1>보험사 전산 바로가기</h1>
+  <p>로고를 클릭하면 영업지원 전산으로 바로 이동합니다</p>
+  <div class="search-wrap">
+    <input type="text" id="search" placeholder="보험사명 검색 (예: 삼성, KB, 한화...)">
+    <span class="search-icon">&#128269;</span>
+  </div>
+</section>
 
-  <!-- TABS -->
-  <nav class="tabs-container">
-    <div class="tabs" id="tabs">
-      <div class="tab active" data-tab="손해보험">손해보험 <span class="badge">13</span></div>
-      <div class="tab" data-tab="생명보험">생명보험 <span class="badge">20</span></div>
-      <div class="tab" data-tab="공제회사">공제회사 <span class="badge">5</span></div>
-      <div class="tab" data-tab="기타">기타(디지털보험사) <span class="badge">7</span></div>
-      <div class="tab" data-tab="영업모음">영업모음</div>
-    </div>
-  </nav>
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot chrome"></div> Chrome 전용</div>
+  <div class="legend-item"><div class="legend-dot edge"></div> Edge 전용</div>
+</div>
 
-  <!-- MAIN -->
-  <main class="main">
-    <div id="companyGrid" class="cards-grid"></div>
-    <div id="salesSection" class="sales-section" style="display:none">
-      <div class="section-title">📋 영업지원 도구 모음</div>
-      <div class="sales-grid" id="salesGrid"></div>
-    </div>
-    <div id="noResults" class="no-results" style="display:none">
-      <div class="no-results-icon">🔍</div>
-      <div class="no-results-text">검색 결과가 없습니다</div>
-    </div>
-  </main>
+<nav class="tabs">
+  <div class="tabs-inner">
+    <button class="tab active" data-tab="damage" onclick="switchTab('damage')">손해보험 <span class="badge">13</span></button>
+    <button class="tab" data-tab="life" onclick="switchTab('life')">생명보험 <span class="badge">21</span></button>
+    <button class="tab" data-tab="mutual" onclick="switchTab('mutual')">공제조합 <span class="badge">5</span></button>
+    <button class="tab" data-tab="digital" onclick="switchTab('digital')">디지털/기타 <span class="badge">6</span></button>
+    <button class="tab" data-tab="links" onclick="switchTab('links')">영업모음</button>
+  </div>
+</nav>
 
-  <footer class="footer">
-    © 2025 에즈금융서비스 퍼스트지점. All rights reserved.
-  </footer>
+<main class="main">
+  <div class="section active" id="sec-damage"><div class="card-grid" id="grid-damage"></div><div class="no-results" id="nr-damage"><p>검색 결과가 없습니다</p></div></div>
+  <div class="section" id="sec-life"><div class="card-grid" id="grid-life"></div><div class="no-results" id="nr-life"><p>검색 결과가 없습니다</p></div></div>
+  <div class="section" id="sec-mutual"><div class="card-grid" id="grid-mutual"></div><div class="no-results" id="nr-mutual"><p>검색 결과가 없습니다</p></div></div>
+  <div class="section" id="sec-digital"><div class="card-grid" id="grid-digital"></div><div class="no-results" id="nr-digital"><p>검색 결과가 없습니다</p></div></div>
+  <div class="section" id="sec-links"><div class="links-grid" id="grid-links"></div></div>
+</main>
 
-  <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<footer class="footer">&copy; 2025 에즈금융서비스 퍼스트지점. All rights reserved.</footer>
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
 
 <script>
-// ===== DATA =====
-const companyData = {
-  "손해보험": [
-    {
-      name: "KB손해보험",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/854ea7a6034d4.png",
-      logoLink: "https://www.kbinsure.co.kr/main.ec",
-      contacts: [
-        { label: "고객센터", value: "1544-0114", type: "phone" },
-        { label: "인콜 모니터링", value: "1544-0019", type: "phone" },
-        { label: "보험금청구팩스", value: "0505-136-6500", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.kbinsure.co.kr/CG205020001.ec" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.kbinsure.co.kr/CG802030001.ec" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "1544-8119", type: "phone" },
-        { label: "PC 영업지원", href: "https://nsales.kbinsure.co.kr/", icon: "💻" },
-        { label: "모바일(Android)", href: "https://play.google.com/store/apps/details?id=com.kbinsure.smart.agent", icon: "📱" }
-      ]
-    },
-    {
-      name: "DB손해보험",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/3c8a48367f34f.png",
-      logoLink: "https://www.idbins.com/",
-      contacts: [
-        { label: "고객센터", value: "1588-0100", type: "phone" },
-        { label: "인콜 모니터링", value: "1566-0757", type: "phone" },
-        { label: "보험금청구팩스", value: "0505-181-4862", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.directdb.co.kr/bridge/claimBridge.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.idbins.com/web/ins/prds/selectPrdClauseList.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-2262-1241", type: "phone" },
-        { label: "PC 영업지원", href: "https://ga.idbins.com/", icon: "💻" },
-        { label: "모바일(Android)", href: "https://play.google.com/store/apps/details?id=com.dbins.smart.ga", icon: "📱" },
-        { label: "모바일(iOS)", href: "https://apps.apple.com/kr/app/db%EC%86%90%ED%95%B4%EB%B3%B4%ED%97%98-ga-%EC%98%81%EC%97%85%EC%A7%80%EC%9B%90/id6468897419", icon: "🍎" }
-      ]
-    },
-    {
-      name: "하나손해보험",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/43befa645b45f.png",
-      logoLink: "https://www.hanainsure.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1566-3000", type: "phone" },
-        { label: "인콜 모니터링", value: "02-6299-6821", type: "phone" },
-        { label: "보험금청구팩스", value: "0505-152-0698", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.hanainsure.co.kr/kid/CS020100.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.hanainsure.co.kr/kid/PR010100.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-6670-8110", type: "phone" },
-        { label: "PC 영업지원", href: "https://ga.hanainsure.co.kr/", icon: "💻" },
-        { label: "모바일(Android)", href: "https://play.google.com/store/apps/details?id=com.hanafn.hanainsure.ga", icon: "📱" },
-        { label: "모바일(iOS)", href: "https://apps.apple.com/kr/app/%ED%95%98%EB%82%98%EC%86%90%ED%95%B4%EB%B3%B4%ED%97%98-ga-%EC%98%81%EC%97%85%EC%A7%80%EC%9B%90/id6477523754", icon: "🍎" }
-      ]
-    },
-    {
-      name: "현대해상",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/1fedcca36ba68.png",
-      logoLink: "https://www.hi.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1588-5656", type: "phone" },
-        { label: "인콜 모니터링", value: "1577-3223", type: "phone" },
-        { label: "보험금청구팩스", value: "0507-774-6060", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.hi.co.kr/service/accidentInsurance.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.hi.co.kr/agreement/agreementMain.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-2628-4567", type: "phone" },
-        { label: "PC 영업지원", href: "https://ga.hi.co.kr/main.do", icon: "💻" },
-        { label: "모바일(Android)", href: "https://play.google.com/store/apps/details?id=kr.co.hi.agent.app", icon: "📱" }
-      ]
-    },
-    {
-      name: "흥국화재",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/1edbb0f0c83f6.png",
-      logoLink: "https://www.heungkukfire.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1688-1688", type: "phone" },
-        { label: "인콜 모니터링", value: "1688-6997", type: "phone" },
-        { label: "보험금청구팩스", value: "0504-800-0700", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.heungkukfire.co.kr/cust/insGdnc/insReqGuide.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.heungkukfire.co.kr/prd/prdDsclsr/prdClauseList.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-2119-5151", type: "phone" },
-        { label: "PC 영업지원", href: "https://ga.heungkukfire.co.kr/", icon: "💻" },
-        { label: "모바일(Android)", href: "https://play.google.com/store/apps/details?id=com.heungkukfire.ga", icon: "📱" },
-        { label: "모바일(iOS)", href: "https://apps.apple.com/kr/app/%ED%9D%A5%EA%B5%AD%ED%99%94%EC%9E%AC-ga/id6470000000", icon: "🍎" }
-      ]
-    },
-    {
-      name: "롯데손해보험",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/d294184c23e1e.png",
-      logoLink: "https://www.lotteins.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1588-3344", type: "phone" },
-        { label: "인콜 모니터링", value: "1600-5182", type: "phone" },
-        { label: "보험금청구팩스", value: "0507-333-9999", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.lotteins.co.kr/customer/claimGuide.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.lotteins.co.kr/product/clauseList.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-3455-3984", type: "phone" },
-        { label: "PC 영업지원", href: "https://ga.lotteins.co.kr/", icon: "💻" },
-        { label: "모바일(Android)", href: "https://play.google.com/store/apps/details?id=com.lotteins.ga", icon: "📱" }
-      ]
-    },
-    {
-      name: "AIG손해보험",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/e65780a2bb45b.jpg",
-      logoLink: "https://www.aig.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1544-2792", type: "phone" },
-        { label: "보험금청구팩스", value: "02-2127-2308", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.aig.co.kr/customer-service/claims" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.aig.co.kr/products/product-disclosure" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-3773-5114", type: "phone" }
-      ]
-    },
-    {
-      name: "NH농협손해보험",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/69d57644e89fb.png",
-      logoLink: "https://www.nhfire.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1644-9000", type: "phone" },
-        { label: "인콜 모니터링", value: "1644-9600", type: "phone" },
-        { label: "보험금청구팩스", value: "0505-060-7000", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.nhfire.co.kr/hp/cct/ccta050/ccta050.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.nhfire.co.kr/hp/prd/prda050/prda050.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-3786-8800", type: "phone" }
-      ]
-    },
-    {
-      name: "메리츠화재",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/20978b1965283.png",
-      logoLink: "https://www.meritzfire.com/",
-      contacts: [
-        { label: "고객센터", value: "1566-7711", type: "phone" },
-        { label: "인콜 모니터링", value: "1577-7711", type: "phone" },
-        { label: "보험금청구팩스", value: "0505-021-3400", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.meritzfire.com/customer/accident-guide.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.meritzfire.com/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-3786-2777", type: "phone" },
-        { label: "PC 영업지원", href: "https://ga.meritzfire.com/", icon: "💻" },
-        { label: "모바일(Android)", href: "https://play.google.com/store/apps/details?id=com.meritzfire.ga", icon: "📱" }
-      ]
-    },
-    {
-      name: "처브손해보험",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/235b881752ad5.png",
-      logoLink: "https://www.chubb.com/kr/",
-      contacts: [
-        { label: "고객센터", value: "1599-7400", type: "phone" },
-        { label: "보험금청구팩스", value: "콜센터개별접수", type: "text" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.chubb.com/kr/customer/claims.html" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.chubb.com/kr/products/terms.html" }
-      ],
-      tools: []
-    },
-    {
-      name: "삼성화재",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/a9b688473bc4d.png",
-      logoLink: "https://www.samsungfire.com/",
-      contacts: [
-        { label: "고객센터", value: "1588-5114", type: "phone" },
-        { label: "인콜 모니터링", value: "1566-0553", type: "phone" },
-        { label: "보험금청구팩스", value: "0505-162-0872", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.samsungfire.com/customer/CM_FR_CS_005.htm" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.samsungfire.com/product/CM_FR_PR_009.htm" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "1899-5005", type: "phone" },
-        { label: "PC 영업지원", href: "https://ga.samsungfire.com/", icon: "💻" },
-        { label: "모바일(Android)", href: "https://play.google.com/store/apps/details?id=com.samsungfire.ga", icon: "📱" }
-      ]
-    },
-    {
-      name: "MG손해보험",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/2e818d91a2816.jpg",
-      logoLink: "https://www.mggeneralins.com/",
-      contacts: [
-        { label: "고객센터", value: "1588-5959", type: "phone" },
-        { label: "인콜 모니터링", value: "1577-3777", type: "phone" },
-        { label: "보험금청구팩스", value: "0505-088-1646", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.mggeneralins.com/customer/insurance.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.mggeneralins.com/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-3788-2261", type: "phone" }
-      ]
-    },
-    {
-      name: "한화손해보험",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/7aac6a3a9898c.png",
-      logoLink: "https://www.hwgeneralins.com/",
-      contacts: [
-        { label: "고객센터", value: "1566-8000", type: "phone" },
-        { label: "인콜 모니터링", value: "1670-1882", type: "phone" },
-        { label: "보험금청구팩스", value: "0502-779-1004", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.hwgeneralins.com/customer/insurance/guide.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.hwgeneralins.com/product/clause/list.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "1899-3899", type: "phone" }
-      ]
-    }
-  ],
-  "생명보험": [
-    {
-      name: "ABL생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/4c03d752456e4.png",
-      logoLink: "https://www.abllife.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1588-6500", type: "phone" },
-        { label: "인콜 모니터링", value: "1566-1002", type: "phone" },
-        { label: "보험금청구팩스", value: "02-3299-5544", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.abllife.co.kr/st/custDesk/insSrvcGudn/acdtInsmClamGudn/acdtInsmClamGudn3" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.abllife.co.kr/st/pban/prdtPban/whlPrdt/whlPrdt1/whlPrdt11" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-3787-8583", type: "phone" },
-        { label: "PC 영업지원", href: "https://ga.abllife.co.kr/", icon: "💻" },
-        { label: "모바일(Android)", href: "https://play.google.com/store/apps/details?id=com.abllife.ga", icon: "📱" }
-      ]
-    },
-    {
-      name: "BNP파리바카디프생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/35866b4036e97.png",
-      logoLink: "https://www.cardif.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1588-9600", type: "phone" },
-        { label: "인콜 모니터링", value: "1588-9600", type: "phone" },
-        { label: "보험금청구팩스", value: "콜센터개별접수", type: "text" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.cardiflife.co.kr/customer/claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.cardiflife.co.kr/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "1899-0751", type: "phone" }
-      ]
-    },
-    {
-      name: "처브라이프",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/ca154524b1de9.gif",
-      logoLink: "https://www.chubblife.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1588-0220", type: "phone" },
-        { label: "인콜 모니터링", value: "1588-0220", type: "phone" },
-        { label: "보험금청구팩스", value: "콜센터개별접수", type: "text" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.chubblife.co.kr/customer/claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.chubblife.co.kr/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-3271-5108", type: "phone" }
-      ]
-    },
-    {
-      name: "DB생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/432af76805ac2.png",
-      logoLink: "https://www.idblife.com/",
-      contacts: [
-        { label: "고객센터", value: "1588-3114", type: "phone" },
-        { label: "인콜 모니터링", value: "1588-3115", type: "phone" },
-        { label: "보험금청구팩스", value: "콜센터개별접수", type: "text" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.idblife.com/customer/claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.idblife.com/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-311-4500", type: "phone" }
-      ]
-    },
-    {
-      name: "푸본현대생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/6a6e2299029d4.png",
-      logoLink: "https://www.fubonhyundai.com/",
-      contacts: [
-        { label: "고객센터", value: "1577-1004", type: "phone" },
-        { label: "인콜 모니터링", value: "080-899-1004", type: "phone" },
-        { label: "보험금청구팩스", value: "02-3289-4517", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.fubonhyundai.com/customer/claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.fubonhyundai.com/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-728-9900", type: "phone" }
-      ]
-    },
-    {
-      name: "하나생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/282fbb0baea89.png",
-      logoLink: "https://www.hanalife.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1577-4117", type: "phone" },
-        { label: "인콜 모니터링", value: "02-2270-1661", type: "phone" },
-        { label: "보험금청구팩스", value: "02-2270-1577", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.hanalife.co.kr/customer/claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.hanalife.co.kr/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-2270-1692", type: "phone" }
-      ]
-    },
-    {
-      name: "한화생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/5acd9fdc11432.jpg",
-      logoLink: "https://www.hanwhalife.com/",
-      contacts: [
-        { label: "고객센터", value: "1588-2288", type: "phone" },
-        { label: "인콜 모니터링", value: "1877-7006", type: "phone" },
-        { label: "보험금청구팩스", value: "콜센터개별접수", type: "text" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.hanwhalife.com/customer/claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.hanwhalife.com/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "031-786-8088", type: "phone" }
-      ]
-    },
-    {
-      name: "흥국생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/a277ae94fcd12.png",
-      logoLink: "https://www.heungkuklife.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1588-1001", type: "phone" },
-        { label: "인콜 모니터링", value: "1588-1636", type: "phone" },
-        { label: "보험금청구팩스", value: "콜센터개별접수", type: "text" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.heungkuklife.co.kr/customer/claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.heungkuklife.co.kr/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-721-3130", type: "phone" }
-      ]
-    },
-    {
-      name: "교보생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/b4a226b1eb185.png",
-      logoLink: "https://www.kyobo.com/dgt/web/dtm/co/main",
-      contacts: [
-        { label: "고객센터", value: "1588-9898", type: "phone" },
-        { label: "인콜 모니터링", value: "1588-2513", type: "phone" },
-        { label: "보험금청구팩스", value: "02-2021-4540", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.kyobo.co.kr/customer/insurance-claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.kyobo.co.kr/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "1588-2937", type: "phone" },
-        { label: "PC 영업지원", href: "https://ga.kyobo.co.kr/", icon: "💻" },
-        { label: "모바일(Android)", href: "https://play.google.com/store/apps/details?id=com.kyobo.ga", icon: "📱" }
-      ]
-    },
-    {
-      name: "NH농협생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/9d2b0871d883b.png",
-      logoLink: "https://www.nhlife.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1544-4000", type: "phone" },
-        { label: "인콜 모니터링", value: "1544-4422", type: "phone" },
-        { label: "보험금청구팩스", value: "02-6971-6040", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.nhlife.co.kr/customer/claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.nhlife.co.kr/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-3786-8800", type: "phone" }
-      ]
-    },
-    {
-      name: "삼성생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/e857eead16956.png",
-      logoLink: "https://www.samsunglife.com/",
-      contacts: [
-        { label: "고객센터", value: "1577-1112", type: "phone" },
-        { label: "인콜 모니터링", value: "1577-1112", type: "phone" },
-        { label: "보험금청구팩스", value: "02-6719-6722", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.samsunglife.com/customer/claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.samsunglife.com/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-3709-8602", type: "phone" },
-        { label: "PC 영업지원", href: "https://ga.samsunglife.com/", icon: "💻" }
-      ]
-    },
-    {
-      name: "신한라이프",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/af5a497186d31.png",
-      logoLink: "https://www.shinhanlife.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1588-6363", type: "phone" },
-        { label: "인콜 모니터링", value: "1800-6633", type: "phone" },
-        { label: "보험금청구팩스", value: "콜센터개별접수", type: "text" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.shinhanlife.co.kr/customer/claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.shinhanlife.co.kr/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-1522-6379", type: "phone" },
-        { label: "PC 영업지원", href: "https://ga.shinhanlife.co.kr/", icon: "💻" }
-      ]
-    },
-    {
-      name: "iM라이프",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/8d385a8c76a0d.png",
-      logoLink: "https://www.imlife.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1588-5580", type: "phone" },
-        { label: "인콜 모니터링", value: "1522-2285", type: "phone" },
-        { label: "보험금청구팩스", value: "콜센터개별접수", type: "text" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.imlife.co.kr/customer/claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.imlife.co.kr/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-3455-4119", type: "phone" }
-      ]
-    },
-    {
-      name: "KDB생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/a2630d5c59d27.png",
-      logoLink: "https://www.kdblife.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1588-4040", type: "phone" },
-        { label: "인콜 모니터링", value: "1588-4040", type: "phone" },
-        { label: "보험금청구팩스", value: "콜센터개별접수", type: "text" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.kdblife.co.kr/customer/claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.kdblife.co.kr/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-6303-2771", type: "phone" }
-      ]
-    },
-    {
-      name: "라이나생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/d9156259adeb7.png",
-      logoLink: "https://www.lina.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1588-4770", type: "phone" },
-        { label: "인콜 모니터링", value: "1588-4770", type: "phone" },
-        { label: "보험금청구팩스", value: "0505-083-5420", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.lina.co.kr/customer-service/insurance-claim-guide.html" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.lina.co.kr/products/terms-conditions.html" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-2087-9594", type: "phone" }
-      ]
-    },
-    {
-      name: "메트라이프생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/69b939acb9deb.png",
-      logoLink: "https://www.metlife.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1588-3131", type: "phone" },
-        { label: "인콜 모니터링", value: "02-6470-7663", type: "phone" },
-        { label: "보험금청구팩스", value: "0505-129-3134", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.metlife.co.kr/customer/insurance-benefits/" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.metlife.co.kr/products/terms-and-conditions/" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "02-2119-5151", type: "phone" },
-        { label: "PC 영업지원", href: "https://ga.metlife.co.kr/", icon: "💻" },
-        { label: "모바일(Android)", href: "https://play.google.com/store/apps/details?id=com.metlife.ga", icon: "📱" }
-      ]
-    },
-    {
-      name: "DGB생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/9e1adba88c297.jpg",
-      logoLink: "https://www.dgbfnlife.com/",
-      contacts: [
-        { label: "고객센터", value: "1688-1118", type: "phone" },
-        { label: "인콜 모니터링", value: "1688-1118", type: "phone" },
-        { label: "보험금청구팩스", value: "콜센터개별접수", type: "text" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.dgbfnlife.com/customer/insurance-claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.dgbfnlife.com/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "1577-3435", type: "phone" },
-        { label: "PC 영업지원", href: "https://ga.dgbfnlife.com/", icon: "💻" },
-        { label: "모바일(Android)", href: "https://play.google.com/store/apps/details?id=com.dgbfnlife.ga", icon: "📱" }
-      ]
-    },
-    {
-      name: "동양생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/850833c7f20d2.png",
-      logoLink: "https://www.myangel.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1599-4600", type: "phone" },
-        { label: "인콜 모니터링", value: "1599-4600", type: "phone" },
-        { label: "보험금청구팩스", value: "02-3480-7801", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.myangel.co.kr/customer/claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.myangel.co.kr/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "1599-4646", type: "phone" },
-        { label: "PC 영업지원", href: "https://ga.myangel.co.kr/", icon: "💻" },
-        { label: "모바일(Android)", href: "https://play.google.com/store/apps/details?id=com.myangel.ga", icon: "📱" }
-      ]
-    },
-    {
-      name: "미래에셋생명",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/95869b6554a62.png",
-      logoLink: "https://life.miraeasset.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1577-3311", type: "phone" },
-        { label: "보험금청구팩스", value: "0505-106-0311", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://life.miraeasset.co.kr/customer/claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://life.miraeasset.co.kr/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "080-860-1212", type: "phone" }
-      ]
-    },
-    {
-      name: "KB라이프",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/fbbd908c85b75.png",
-      logoLink: "https://www.kblife.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1588-3374", type: "phone" },
-        { label: "인콜 모니터링", value: "1566-2730", type: "phone" },
-        { label: "보험금청구팩스", value: "02-6220-9912", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.aia.co.kr/customer/claim.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.aia.co.kr/product/clause.do" }
-      ],
-      tools: [
-        { label: "전산헬프데스크", value: "1899-3899", type: "phone" }
-      ]
-    }
-  ],
-  "공제회사": [
-    {
-      name: "우체국보험",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/e902192891bcd.png",
-      logoLink: "https://epostlife.go.kr/MNDMDM0000.do",
-      contacts: [
-        { label: "고객센터", value: "1599-0100", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://epostlife.go.kr/PYIMRD0002.do" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://epostlife.go.kr/ASISDM00AT.do" }
-      ],
-      tools: []
-    },
-    {
-      name: "신협공제",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/63d417812b53f.png",
-      logoLink: "https://openbank.cu.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1544-3030", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://openbank.cu.co.kr/" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://openbank.cu.co.kr/" }
-      ],
-      tools: []
-    },
-    {
-      name: "한국교직원공제회",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/c6dbf90da9f50.png",
-      logoLink: "https://www.ktcu.or.kr/index",
-      contacts: [
-        { label: "고객센터", value: "1588-4110", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.ktcu.or.kr/" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.ktcu.or.kr/" }
-      ],
-      tools: []
-    },
-    {
-      name: "새마을금고",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/72558d5cb25f4.png",
-      logoLink: "https://insure.kfcc.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1599-9000", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://insure.kfcc.co.kr/" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://insure.kfcc.co.kr/" }
-      ],
-      tools: []
-    },
-    {
-      name: "수협",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/810453fd246a5.png",
-      logoLink: "https://www.suhyup-bank.com/",
-      contacts: [
-        { label: "고객센터", value: "1588-1515", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.suhyup-bank.com/" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.suhyup-bank.com/" }
-      ],
-      tools: []
-    }
-  ],
-  "기타": [
-    {
-      name: "AXA손해보험",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/75e74373ffc39.png",
-      logoLink: "https://www.axa.co.kr/ActionControler.action",
-      contacts: [
-        { label: "고객센터", value: "1566-1566", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.axa.co.kr/AsianPlatformInternet/html/axacms/shcl/pa/process/index.html" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.axa.co.kr/AsianPlatformInternet/html/axacms/common/intro/disclosure/insurance/index.html" }
-      ],
-      tools: []
-    },
-    {
-      name: "신한EZ손해보험",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/c279f74aaacde.png",
-      logoLink: "https://www.shinhanez.co.kr/static/man/MAIN0000M01.html",
-      contacts: [
-        { label: "고객센터", value: "1544-2580", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.shinhanez.co.kr/" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.shinhanez.co.kr/" }
-      ],
-      tools: []
-    },
-    {
-      name: "하나원데이손해보험",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/4c0579a654c7b.png",
-      logoLink: "https://day.hanainsure.co.kr/oneday/main",
-      contacts: [
-        { label: "고객센터", value: "1566-3000", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://day.hanainsure.co.kr/" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://day.hanainsure.co.kr/" }
-      ],
-      tools: []
-    },
-    {
-      name: "교보라이프플래닛",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/83beea9692260.png",
-      logoLink: "https://www.lifeplanet.co.kr/startmain/main.dev",
-      contacts: [
-        { label: "고객센터", value: "1588-4770", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.lifeplanet.co.kr/" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.lifeplanet.co.kr/" }
-      ],
-      tools: []
-    },
-    {
-      name: "카카오페이손해보험",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/9f176213d1611.png",
-      logoLink: "https://kakaopayinscorp.co.kr/",
-      contacts: [
-        { label: "고객센터", value: "1670-4900", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://kakaopayinscorp.co.kr/" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://kakaopayinscorp.co.kr/" }
-      ],
-      tools: []
-    },
-    {
-      name: "삼성화재다이렉트",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/4317ee6333d46.png",
-      logoLink: "https://direct.samsungfire.com/",
-      contacts: [
-        { label: "고객센터", value: "1588-5114", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://direct.samsungfire.com/" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://direct.samsungfire.com/" }
-      ],
-      tools: []
-    },
-    {
-      name: "캐롯손해보험",
-      logo: "https://cdn.imweb.me/upload/S2025032103384a9860793/f54883a586133.png",
-      logoLink: "https://www.carrotins.com/desktop/calculation/car/personal/",
-      contacts: [
-        { label: "고객센터", value: "1566-5050", type: "phone" },
-        { label: "보험금청구양식", value: "바로가기", type: "link", href: "https://www.carrotins.com/" },
-        { label: "약관공시실", value: "바로가기", type: "link", href: "https://www.carrotins.com/" }
-      ],
-      tools: []
-    }
-  ]
-};
+// ====== DATA ======
+const C = [
+  // === 손해보험 (13) ===
+  {c:"damage",n:"삼성화재",b:"edge",l:"https://erp.samsungfire.com/",
+   logo:"https://xn--on3bi2e18htop.com/images/fire_logo08.jpg",
+   tel:"1588-5114",incall:"1566-0553",help:"1899-5005",fax:"0505-162-0872"},
+  {c:"damage",n:"메리츠화재",b:"edge",l:"http://sales.meritzfire.com/",
+   logo:"https://xn--on3bi2e18htop.com/images/%EB%A9%94%EB%A6%AC%EC%B8%A0%ED%99%94%EC%9E%AC.png",
+   tel:"1566-7711",incall:"1577-7711",help:"02-3786-2777",fax:"0505-021-3400"},
+  {c:"damage",n:"DB손해보험",b:"chrome",l:"https://www.mdbins.com/",
+   logo:"https://xn--on3bi2e18htop.com/images/DB%EC%86%90%ED%95%B4%EB%B3%B4%ED%97%98.png",
+   tel:"1588-0100",incall:"1566-0757",help:"02-2262-1241",fax:"0505-181-4862"},
+  {c:"damage",n:"KB손해보험",b:"chrome",l:"https://nsales.kbinsure.co.kr/eus/ch/ch_index.jsp",
+   logo:"https://xn--on3bi2e18htop.com/images/kbf.png",
+   tel:"1544-0114",incall:"1544-0019",help:"1544-8119",fax:"0505-136-6500"},
+  {c:"damage",n:"현대해상",b:"chrome",l:"https://sp.hi.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/1fedcca36ba68.png",
+   tel:"1588-5656",incall:"1577-3223",help:"02-2628-4567",fax:"0507-774-6060"},
+  {c:"damage",n:"한화손해보험",b:"edge",l:"http://portal.hwgeneralins.com/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/7aac6a3a9898c.png",
+   tel:"1566-8000",incall:"1670-1882",help:"1899-3899",fax:"0502-779-1004"},
+  {c:"damage",n:"롯데손해보험",b:"edge",l:"http://lottero.lotteins.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/d294184c23e1e.png",
+   tel:"1588-3344",incall:"1600-5182",help:"02-3455-3984",fax:"0507-333-9999"},
+  {c:"damage",n:"흥국화재",b:"edge",l:"https://sales.heungkukfire.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/1edbb0f0c83f6.png",
+   tel:"1688-1688",incall:"1688-6997",help:"02-2119-5151",fax:"0504-800-0700"},
+  {c:"damage",n:"하나손해보험",b:"chrome",l:"https://sfa.saleshana.com/index.html",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/43befa645b45f.png",
+   tel:"1566-3000",incall:"02-6299-6821",help:"02-6670-8110",fax:"0505-152-0698"},
+  {c:"damage",n:"NH농협손해보험",b:"chrome",l:"https://ss.nhfire.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/69d57644e89fb.png",
+   tel:"1644-9000",incall:"1644-9600",help:"02-3786-8800",fax:"0505-060-7000"},
+  {c:"damage",n:"AIG손해보험",b:"chrome",l:"https://ga.aig.co.kr/usrLogin.do",
+   logo:"https://xn--on3bi2e18htop.com/images/AIG%EC%86%90%ED%95%B4%EB%B3%B4%ED%97%98.png",
+   tel:"1544-2792",incall:"-",help:"02-3773-5114",fax:"02-2127-2308"},
+  {c:"damage",n:"예별손해보험",b:"edge",l:"https://mganet.mggeneralins.com/",
+   logo:"https://xn--on3bi2e18htop.com/images/MG%EC%86%90%ED%95%B4%EB%B3%B4%ED%97%98.png",
+   tel:"1588-5959",incall:"1577-3777",help:"02-3788-2261",fax:"0505-088-1646"},
+  {c:"damage",n:"라이나손해보험",b:"chrome",l:"https://ga.linagi.com/html/gap/GA/GAZ911M0.html",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/e65780a2bb45b.jpg",
+   tel:"1566-5800",incall:"-",help:"-",fax:"02-2127-2308"},
 
-const salesData = [
-  { text: "모든 전산 한눈에", icon: "🌐", href: "http://www.gasupport.co.kr/Gasys/mega/inc/pop_insuCon.asp" },
-  { text: "보험 원수사 전산매뉴얼 모음", icon: "💻", href: "https://drive.google.com/drive/folders/1Ia276-4vJ9eOw3OFvGiVyiGboObxXH61" },
-  { text: "손해보험 협회", icon: "🏛️", href: "https://isi.knia.or.kr/index.do" },
-  { text: "생명보험 협회", icon: "🏛️", href: "https://fp.insure.or.kr/" },
-  { text: "보험연수원 등록/보수교육", icon: "📚", href: "https://is.in.or.kr/" },
-  { text: "실손24 (전산청구)", icon: "📤", href: "https://www.silson24.or.kr/claim/web/" },
-  { text: "회사별 보험청구서 모음", icon: "📑", href: "https://drive.google.com/drive/folders/14NoEN_jS2axMsuF-TzBFn7FFkbulJjJZ" },
-  { text: "질병코드 KCD 검색", icon: "🔡", href: "https://www.koicd.kr/" },
-  { text: "주요 건강지표 통계", icon: "📊", href: "https://drive.google.com/drive/folders/1bslELrIX_9dC1_sTMJYGoss8xn1baWpq" },
-  { text: "상조회사 연락망", icon: "📓", href: "http://www.koreasangjo.or.kr/" },
-  { text: "할인/할증요인 조회", icon: "🔎", href: "https://kidi.or.kr/" },
-  { text: "자동차보험 과실비율 인정기준", icon: "🚗", href: "https://kidi.or.kr/" },
-  { text: "피보험자 동의(사인)", icon: "✍️", href: "https://www.insure.or.kr/" },
-  { text: "온라인 청약 링크 모음", icon: "🔗", href: "https://drive.google.com/drive/folders/" },
-  { text: "보험 세금(비과세 기준)", icon: "💰", href: "https://drive.google.com/drive/" },
-  { text: "건강보험공단", icon: "🏥", href: "https://www.nhis.or.kr/" },
-  { text: "국민건강보험 요양기관 현황", icon: "🏥", href: "https://www.nhis.or.kr/" }
+  // === 생명보험 (21) ===
+  {c:"life",n:"한화생명",b:"chrome",l:"https://hmp.hanwhalife.com/online/ga",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/5acd9fdc11432.jpg",
+   tel:"1588-2288",incall:"1877-7006",help:"031-786-8088",fax:"-"},
+  {c:"life",n:"동양생명",b:"chrome",l:"http://1004.myangel.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/850833c7f20d2.png",
+   tel:"1599-4600",incall:"1599-4600",help:"1599-4646",fax:"02-3480-7801"},
+  {c:"life",n:"교보생명",b:"edge",l:"https://ga.kyobo.com/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/b4a226b1eb185.png",
+   tel:"1588-9898",incall:"1588-2513",help:"1588-2937",fax:"02-2021-4540"},
+  {c:"life",n:"삼성생명",b:"edge",l:"https://connectplus.samsunglife.com:10443/gasso/login",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/e857eead16956.png",
+   tel:"1577-1112",incall:"1577-1112",help:"02-3709-8602",fax:"02-6719-6722"},
+  {c:"life",n:"라이나생명",b:"edge",l:"https://ga.lina.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/d9156259adeb7.png",
+   tel:"1588-4770",incall:"1588-4770",help:"02-2087-9594",fax:"0505-083-5420"},
+  {c:"life",n:"KDB생명",b:"chrome",l:"http://kss.kdblife.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/a2630d5c59d27.png",
+   tel:"1588-4040",incall:"1588-4040",help:"02-6303-2771",fax:"-"},
+  {c:"life",n:"iM라이프",b:"chrome",l:"https://fgs.dgbfnlife.com:8443/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/8d385a8c76a0d.png",
+   tel:"1588-5580",incall:"1522-2285",help:"02-3455-4119",fax:"-"},
+  {c:"life",n:"미래에셋생명",b:"edge",l:"http://www.loveageplan.com/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/95869b6554a62.png",
+   tel:"1577-3311",incall:"-",help:"080-860-1212",fax:"0505-106-0311"},
+  {c:"life",n:"신한라이프",b:"chrome",l:"https://ga.shinhanlife.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/af5a497186d31.png",
+   tel:"1588-6363",incall:"1800-6633",help:"1522-6379",fax:"-"},
+  {c:"life",n:"KB라이프",b:"edge",l:"https://sfa.kblife.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/fbbd908c85b75.png",
+   tel:"1588-0058",incall:"1588-2442",help:"02-3781-2006",fax:"02-6944-1200"},
+  {c:"life",n:"DB생명",b:"edge",l:"http://etopia.dongbulife.com/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/432af76805ac2.png",
+   tel:"1588-3114",incall:"1588-3115",help:"02-311-4500",fax:"-"},
+  {c:"life",n:"하나생명",b:"chrome",l:"https://ga.hanalife.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/282fbb0baea89.png",
+   tel:"1577-4117",incall:"02-2270-1661",help:"02-2270-1692",fax:"02-2270-1577"},
+  {c:"life",n:"흥국생명",b:"chrome",l:"https://sales.heungkuklife.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/a277ae94fcd12.png",
+   tel:"1588-1001",incall:"1588-1636",help:"02-721-3130",fax:"-"},
+  {c:"life",n:"ABL생명",b:"edge",l:"http://ga.abllife.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/4c03d752456e4.png",
+   tel:"1588-6500",incall:"1566-1002",help:"02-3787-8583",fax:"02-3299-5544"},
+  {c:"life",n:"IBK연금보험",b:"edge",l:"https://sf.ibki.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/8d385a8c76a0d.png",
+   tel:"1588-2288",incall:"-",help:"-",fax:"-"},
+  {c:"life",n:"NH농협생명",b:"edge",l:"https://sfa.nhlife.co.kr:8443/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/9d2b0871d883b.png",
+   tel:"1544-4000",incall:"1544-4422",help:"02-3786-8800",fax:"02-6971-6040"},
+  {c:"life",n:"메트라이프",b:"chrome",l:"http://metplus.metlife.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/69b939acb9deb.png",
+   tel:"1588-3131",incall:"02-6470-7663",help:"02-2119-5151",fax:"0505-129-3134"},
+  {c:"life",n:"처브라이프",b:"edge",l:"http://esmart.chubblife.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/ca154524b1de9.gif",
+   tel:"1588-0220",incall:"1588-0220",help:"02-3271-5108",fax:"-"},
+  {c:"life",n:"푸본현대생명",b:"edge",l:"https://ez.fubonhyundai.com/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/6a6e2299029d4.png",
+   tel:"1577-1004",incall:"080-899-1004",help:"02-728-9900",fax:"02-3289-4517"},
+  {c:"life",n:"BNP파리바카디프",b:"edge",l:"http://ga.cardif.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/35866b4036e97.png",
+   tel:"1588-9600",incall:"1588-9600",help:"1899-0751",fax:"-"},
+  {c:"life",n:"AIA생명",b:"edge",l:"https://imap.aia.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/8c989b4d9ceaa.png",
+   tel:"1588-3374",incall:"1566-2730",help:"1899-3899",fax:"02-6220-9912"},
+
+  // === 공제조합 (5) ===
+  {c:"mutual",n:"MG새마을금고",b:"edge",l:"https://insure.kfcc.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/72558d5cb25f4.png",
+   tel:"1599-9000",incall:"-",help:"-",fax:"-"},
+  {c:"mutual",n:"더케이(교직원공제회)",b:"edge",l:"https://www.ktcu.or.kr/index",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/c6dbf90da9f50.png",
+   tel:"1588-4110",incall:"-",help:"-",fax:"-"},
+  {c:"mutual",n:"수협공제",b:"edge",l:"https://www.suhyup-bank.com/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/810453fd246a5.png",
+   tel:"1588-1515",incall:"-",help:"-",fax:"-"},
+  {c:"mutual",n:"신협공제",b:"edge",l:"https://openbank.cu.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/63d417812b53f.png",
+   tel:"1544-3030",incall:"-",help:"-",fax:"-"},
+  {c:"mutual",n:"우체국보험",b:"chrome",l:"https://epostlife.go.kr/MNDMDM0000.do",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/e902192891bcd.png",
+   tel:"1599-0100",incall:"-",help:"-",fax:"-"},
+
+  // === 디지털/기타 (6) ===
+  {c:"digital",n:"AXA손해보험",b:"chrome",l:"https://www.axa.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/75e74373ffc39.png",
+   tel:"1566-1566",incall:"-",help:"-",fax:"-"},
+  {c:"digital",n:"캐롯손해보험",b:"chrome",l:"https://www.carrotins.com/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/f54883a586133.png",
+   tel:"1566-5050",incall:"-",help:"-",fax:"-"},
+  {c:"digital",n:"하나원데이손해보험",b:"chrome",l:"https://day.hanainsure.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/4c0579a654c7b.png",
+   tel:"1566-3000",incall:"-",help:"-",fax:"-"},
+  {c:"digital",n:"카카오페이손해보험",b:"chrome",l:"https://kakaopayinscorp.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/9f176213d1611.png",
+   tel:"1670-4900",incall:"-",help:"-",fax:"-"},
+  {c:"digital",n:"신한EZ손해보험",b:"chrome",l:"https://www.shinhanez.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/c279f74aaacde.png",
+   tel:"1544-2580",incall:"-",help:"-",fax:"-"},
+  {c:"digital",n:"교보라이프플래닛",b:"chrome",l:"https://www.lifeplanet.co.kr/",
+   logo:"https://cdn.imweb.me/upload/S2025032103384a9860793/83beea9692260.png",
+   tel:"1588-4770",incall:"-",help:"-",fax:"-"},
 ];
 
-// ===== SEARCH INDEX =====
-const searchIndex = {};
-for (const [section, companies] of Object.entries(companyData)) {
-  companies.forEach((company, idx) => {
-    const keywords = [
-      company.name.toLowerCase(),
-      ...company.contacts.map(c => c.value.toLowerCase()),
-    ].join(' ');
-    if (!searchIndex[section]) searchIndex[section] = [];
-    searchIndex[section].push({ idx, keywords, name: company.name });
-  });
-}
+const LINKS = [
+  {n:"모든 전산 한눈에",u:"http://www.gasupport.co.kr/Gasys/mega/inc/pop_insuCon.asp",i:"&#128187;"},
+  {n:"보험 원수사 전산매뉴얼",u:"https://drive.google.com/drive/folders/1Ia276-4vJ9eOw3OFvGiVyiGboObxXH61",i:"&#128218;"},
+  {n:"손해보험 협회",u:"https://isi.knia.or.kr/index.do",i:"&#127970;"},
+  {n:"생명보험 협회",u:"https://fp.insure.or.kr/",i:"&#127970;"},
+  {n:"보험연수원 교육",u:"https://is.in.or.kr/",i:"&#128218;"},
+  {n:"실손24 (전산청구)",u:"https://www.silson24.or.kr/claim/web/",i:"&#128228;"},
+  {n:"회사별 보험청구서 모음",u:"https://drive.google.com/drive/folders/14NoEN_jS2axMsuF-TzBFn7FFkbulJjJZ",i:"&#128203;"},
+  {n:"질병코드 KCD 검색",u:"https://www.koicd.kr/",i:"&#128289;"},
+  {n:"주요 건강지표 통계",u:"https://drive.google.com/drive/folders/1bslELrIX_9dC1_sTMJYGoss8xn1baWpq",i:"&#128200;"},
+  {n:"상조회사 연락망",u:"http://www.koreasangjo.or.kr/",i:"&#128211;"},
+  {n:"할인/할증요인 조회",u:"https://kidi.or.kr/",i:"&#128270;"},
+  {n:"건강보험공단",u:"https://www.nhis.or.kr/",i:"&#127973;"},
+];
 
-// ===== RENDER =====
-let currentTab = '손해보험';
-
-function renderCards(filter = '') {
-  const grid = document.getElementById('companyGrid');
-  const salesSection = document.getElementById('salesSection');
-  const noResults = document.getElementById('noResults');
-
-  if (currentTab === '영업모음') {
-    grid.style.display = 'none';
-    salesSection.style.display = 'block';
-    noResults.style.display = 'none';
-    renderSales(filter);
-    return;
-  }
-
-  grid.style.display = 'grid';
-  salesSection.style.display = 'none';
-
-  const companies = companyData[currentTab] || [];
-  let filtered = companies;
-
-  if (filter) {
-    const q = filter.toLowerCase();
-    filtered = companies.filter(c => {
-      const searchable = [
-        c.name,
-        ...c.contacts.map(ct => ct.label + ct.value),
-        ...c.tools.map(t => t.label + (t.value||''))
-      ].join(' ').toLowerCase();
-      return searchable.includes(q);
-    });
-  }
-
-  if (filtered.length === 0) {
-    grid.innerHTML = '';
-    noResults.style.display = 'block';
-    return;
-  }
-
-  noResults.style.display = 'none';
-
-  grid.innerHTML = filtered.map((company, i) => `
-    <div class="company-card" data-index="${i}" style="animation-delay: ${i * 0.04}s">
-      <div class="card-header" onclick="toggleCard(this)">
-        <a href="${company.logoLink}" target="_blank" onclick="event.stopPropagation()">
-          <img class="card-logo" src="${company.logo}" alt="${company.name}" onerror="this.parentElement.innerHTML='<span style=font-weight:600;font-size:16px>${company.name}</span>'">
-        </a>
-        <div style="display:flex;align-items:center;gap:8px">
-          <span style="font-size:12px;color:var(--text-secondary)">${company.contacts.find(c=>c.label==='고객센터')?.value || ''}</span>
-          <div class="card-toggle">▼</div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="card-content">
-          <div class="info-section">
-            <div class="info-section-title">연락처</div>
-            ${company.contacts.map(c => `
-              <div class="info-row">
-                <span class="info-label">${c.label}</span>
-                ${c.type === 'phone' ? `<a href="tel:${c.value.replace(/-/g,'')}" class="info-value phone">${c.value}</a>` :
-                  c.type === 'link' ? `<a href="${c.href}" target="_blank" class="info-value link">${c.value} →</a>` :
-                  `<span class="info-value">${c.value}</span>`}
-              </div>
-            `).join('')}
-          </div>
-          ${company.tools.length > 0 ? `
-          <div class="info-section">
-            <div class="info-section-title">영업지원 도구</div>
-            ${company.tools.filter(t => t.type === 'phone').map(t => `
-              <div class="info-row">
-                <span class="info-label">${t.label}</span>
-                <a href="tel:${t.value.replace(/-/g,'')}" class="info-value phone">${t.value}</a>
-              </div>
-            `).join('')}
-            <div class="tool-buttons">
-              ${company.tools.filter(t => t.href).map(t => `
-                <a href="${t.href}" target="_blank" class="tool-btn">
-                  <span class="tool-icon">${t.icon || '🔗'}</span>
-                  ${t.label}
-                </a>
-              `).join('')}
-            </div>
-          </div>
-          ` : ''}
-        </div>
-      </div>
+// ====== RENDER ======
+function renderCard(d, i) {
+  const bc = d.b === 'edge' ? 'edge' : 'chrome';
+  const lc = d.b === 'edge' ? 'edge-link' : 'chrome-link';
+  const bLabel = d.b === 'edge' ? 'Edge' : 'Chrome';
+  return `<div class="company-card" id="card-${i}" data-name="${d.n}" data-cat="${d.c}">
+    <div class="browser-dot ${bc}" title="${bLabel} 전용"></div>
+    <div class="card-logo">
+      <img src="${d.logo}" alt="${d.n}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=fallback>${d.n}</div>'">
     </div>
-  `).join('');
-}
-
-function renderSales(filter = '') {
-  const grid = document.getElementById('salesGrid');
-  let items = salesData;
-  if (filter) {
-    const q = filter.toLowerCase();
-    items = salesData.filter(s => s.text.toLowerCase().includes(q));
-  }
-  grid.innerHTML = items.map(item => `
-    <a href="${item.href}" target="_blank" class="sales-item">
-      <div class="sales-icon">${item.icon}</div>
-      <span class="sales-text">${item.text}</span>
+    <div class="card-name">${d.n}</div>
+    <div class="card-phone">${d.tel}</div>
+    <a class="card-link ${lc}" href="${d.l}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+      ${bLabel}로 열기 &#8594;
     </a>
-  `).join('');
+    <button class="more-btn" onclick="event.stopPropagation();toggleCard(${i})" title="상세정보">&#8943;</button>
+    <div class="card-detail">
+      ${d.incall && d.incall !== '-' ? `<div class="detail-row"><span class="detail-label">인콜모니터링</span><span class="detail-value">${d.incall}</span></div>` : ''}
+      ${d.help && d.help !== '-' ? `<div class="detail-row"><span class="detail-label">전산헬프데스크</span><span class="detail-value">${d.help}</span></div>` : ''}
+      ${d.fax && d.fax !== '-' ? `<div class="detail-row"><span class="detail-label">팩스</span><span class="detail-value">${d.fax}</span></div>` : ''}
+    </div>
+  </div>`;
 }
 
-function toggleCard(header) {
-  const card = header.closest('.company-card');
-  card.classList.toggle('expanded');
+function toggleCard(i) {
+  document.getElementById('card-' + i).classList.toggle('open');
 }
 
-// ===== TAB SWITCHING =====
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    currentTab = tab.dataset.tab;
-    document.getElementById('searchInput').value = '';
-    renderCards();
+// ====== TABS ======
+let currentTab = 'damage';
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === 'sec-' + tab));
+  filter();
+}
+
+// ====== SEARCH ======
+document.getElementById('search').addEventListener('input', filter);
+function filter() {
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  ['damage','life','mutual','digital'].forEach(cat => {
+    const grid = document.getElementById('grid-' + cat);
+    const nr = document.getElementById('nr-' + cat);
+    let vis = 0;
+    grid.querySelectorAll('.company-card').forEach(c => {
+      const match = !q || c.dataset.name.toLowerCase().includes(q);
+      c.style.display = match ? '' : 'none';
+      if (match) vis++;
+    });
+    nr.classList.toggle('show', vis === 0 && q.length > 0);
   });
-});
-
-// ===== SEARCH =====
-let searchTimeout;
-document.getElementById('searchInput').addEventListener('input', (e) => {
-  clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(() => {
-    const q = e.target.value.trim();
-    if (q) {
-      // Search across all tabs
-      let found = false;
-      for (const [section, companies] of Object.entries(companyData)) {
-        const matches = companies.filter(c => {
-          const searchable = [c.name, ...c.contacts.map(ct => ct.value)].join(' ').toLowerCase();
-          return searchable.includes(q.toLowerCase());
-        });
-        if (matches.length > 0 && !found) {
-          // Switch to the tab with results
-          currentTab = section;
-          document.querySelectorAll('.tab').forEach(t => {
-            t.classList.toggle('active', t.dataset.tab === section);
-          });
-          found = true;
+  // Auto-switch tab if no results in current
+  if (q) {
+    const cats = ['damage','life','mutual','digital'];
+    const cur = document.querySelectorAll('#grid-' + currentTab + ' .company-card:not([style*="none"])').length;
+    if (cur === 0) {
+      for (const cat of cats) {
+        if (document.querySelectorAll('#grid-' + cat + ' .company-card:not([style*="none"])').length > 0) {
+          switchTab(cat); break;
         }
       }
     }
-    renderCards(q);
-  }, 200);
-});
+  }
+}
 
-// ===== SCROLL TO TOP =====
+// ====== SCROLL TOP ======
 window.addEventListener('scroll', () => {
-  document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400);
+  document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 300);
+}, {passive: true});
+
+// ====== INIT ======
+['damage','life','mutual','digital'].forEach(cat => {
+  document.getElementById('grid-' + cat).innerHTML = C.filter(d => d.c === cat).map((d,i) => renderCard(d, C.indexOf(d))).join('');
 });
-
-// ===== INIT =====
-renderCards();
+document.getElementById('grid-links').innerHTML = LINKS.map(l =>
+  `<a class="link-card" href="${l.u}" target="_blank" rel="noopener"><div class="link-icon">${l.i}</div><span class="link-text">${l.n}</span></a>`
+).join('');
 </script>
-
 </body>
 </html>
