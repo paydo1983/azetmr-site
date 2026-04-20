@@ -114,12 +114,42 @@
     }
     .more-btn:hover{background:var(--primary-light);color:var(--primary)}
 
+    /* PDF button in detail */
+    .pdf-btn{
+      display:inline-flex;align-items:center;gap:4px;margin-top:6px;padding:5px 10px;
+      background:#fef3c7;color:#b45309;border-radius:6px;font-size:11px;font-weight:600;
+      text-decoration:none;transition:.15s;
+    }
+    .pdf-btn:hover{background:#f59e0b;color:#fff}
+
     /* === LINKS SECTION === */
     .links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
     .link-card{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--text);transition:.15s}
     .link-card:hover{border-color:var(--primary);background:var(--primary-light)}
     .link-icon{font-size:20px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--bg);border-radius:8px;flex-shrink:0}
     .link-text{font-size:13px;font-weight:500}
+
+    /* === SECTION HEADER === */
+    .section-header{margin-bottom:16px}
+    .section-title{font-size:18px;font-weight:700;margin-bottom:4px}
+    .section-desc{font-size:13px;color:var(--sub)}
+    .section-group{margin-bottom:28px}
+    .group-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--primary-light)}
+
+    /* === CALCULATOR === */
+    .calc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:560px;margin:0 auto}
+    .calc-row{margin-bottom:16px}
+    .calc-label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}
+    .calc-input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;outline:none;transition:.15s}
+    .calc-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+    .calc-result{background:linear-gradient(135deg,#dbeafe,#e0f2fe);border-radius:12px;padding:20px;text-align:center;margin-top:8px}
+    .calc-result-age{font-size:42px;font-weight:800;color:var(--primary)}
+    .calc-result-unit{font-size:18px;font-weight:600;color:var(--primary);margin-left:4px}
+    .calc-result-detail{font-size:13px;color:var(--sub);margin-top:6px}
+    .calc-extra{margin-top:16px;padding:12px;background:var(--bg);border-radius:8px;font-size:12px;color:var(--sub);line-height:1.6}
+    .calc-extra strong{color:var(--text)}
+    .calc-info-box{background:#f0f9ff;border-left:3px solid var(--primary);padding:12px 14px;border-radius:6px;margin-top:20px;font-size:12px;color:var(--sub);line-height:1.6}
+    .calc-info-box strong{color:var(--text);font-size:13px}
 
     /* === NO RESULTS === */
     .no-results{display:none;text-align:center;padding:40px;color:var(--sub)}
@@ -179,6 +209,10 @@
     <button class="tab" data-tab="life" onclick="switchTab('life')">생명보험 <span class="badge">21</span></button>
     <button class="tab" data-tab="mutual" onclick="switchTab('mutual')">공제조합 <span class="badge">5</span></button>
     <button class="tab" data-tab="digital" onclick="switchTab('digital')">디지털/기타 <span class="badge">6</span></button>
+    <button class="tab" data-tab="claims" onclick="switchTab('claims')">&#128209; 청구서</button>
+    <button class="tab" data-tab="calc" onclick="switchTab('calc')">&#129518; 계산기</button>
+    <button class="tab" data-tab="auto" onclick="switchTab('auto')">&#128664; 자동차</button>
+    <button class="tab" data-tab="edu" onclick="switchTab('edu')">&#128218; 교육</button>
     <button class="tab" data-tab="links" onclick="switchTab('links')">영업모음</button>
   </div>
 </nav>
@@ -188,6 +222,97 @@
   <div class="section" id="sec-life"><div class="card-grid" id="grid-life"></div><div class="no-results" id="nr-life"><p>검색 결과가 없습니다</p></div></div>
   <div class="section" id="sec-mutual"><div class="card-grid" id="grid-mutual"></div><div class="no-results" id="nr-mutual"><p>검색 결과가 없습니다</p></div></div>
   <div class="section" id="sec-digital"><div class="card-grid" id="grid-digital"></div><div class="no-results" id="nr-digital"><p>검색 결과가 없습니다</p></div></div>
+
+  <!-- 청구서 PDF 모음 -->
+  <div class="section" id="sec-claims">
+    <div class="section-header">
+      <div class="section-title">&#128209; 보험금 청구서 PDF 다운로드</div>
+      <div class="section-desc">각 보험사 공식 청구서 양식 · 현장에서 바로 전달 가능</div>
+    </div>
+    <div class="calc-info-box" style="margin-bottom:20px">
+      <strong>청구 안내</strong><br>
+      · 진단서/소견서, 진료비 영수증, 세부내역서는 원본 또는 사본 제출<br>
+      · 100만원 이상은 보험사 지정 서류 필요<br>
+      · 수령 계좌는 피보험자/계약자 본인 계좌 원칙<br>
+      · 청구권 소멸시효 사고일로부터 3년
+    </div>
+    <div class="section-group">
+      <div class="group-title">손해보험</div>
+      <div class="links-grid" id="grid-claims-damage"></div>
+    </div>
+    <div class="section-group">
+      <div class="group-title">생명보험</div>
+      <div class="links-grid" id="grid-claims-life"></div>
+    </div>
+    <div class="section-group">
+      <div class="group-title">공제</div>
+      <div class="links-grid" id="grid-claims-mutual"></div>
+    </div>
+    <div class="section-group">
+      <div class="group-title">&#128054; 펫보험 청구서</div>
+      <div class="links-grid" id="grid-claims-pet"></div>
+    </div>
+  </div>
+
+  <!-- 계산기 (보험나이) -->
+  <div class="section" id="sec-calc">
+    <div class="section-header">
+      <div class="section-title">&#129518; 보험나이 계산기</div>
+      <div class="section-desc">만 나이 + 직전 생일로부터 6개월 경과 여부로 자동 계산</div>
+    </div>
+    <div class="calc-card">
+      <div class="calc-row">
+        <label class="calc-label" for="birthInput">생년월일</label>
+        <input type="date" class="calc-input" id="birthInput">
+      </div>
+      <div class="calc-row">
+        <label class="calc-label" for="baseInput">기준일 (보통 계약일)</label>
+        <input type="date" class="calc-input" id="baseInput">
+      </div>
+      <div class="calc-result" id="calcResult">
+        <div>
+          <span class="calc-result-age" id="resultAge">-</span>
+          <span class="calc-result-unit">세</span>
+        </div>
+        <div class="calc-result-detail" id="resultDetail">생년월일과 기준일을 입력하세요</div>
+      </div>
+      <div class="calc-extra" id="calcExtra"></div>
+      <div class="calc-info-box">
+        <strong>보험나이란?</strong><br>
+        보험료·가입한도 산정 시 사용하는 나이입니다. 보험업감독규정과 표준약관에 따라,
+        계약일 시점의 만 나이를 기준으로 직전 생일로부터 6개월이 지났으면 한 살을 더하고,
+        그렇지 않으면 만 나이를 그대로 씁니다.<br><br>
+        <strong>예시</strong><br>
+        1990년 1월 1일생이 2026년 8월 1일에 가입 → 만 36세, 직전 생일(2026-01-01)에서
+        7개월 경과 → <strong>보험나이 37세</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- 자동차보험 실무 -->
+  <div class="section" id="sec-auto">
+    <div class="section-header">
+      <div class="section-title">&#128664; 자동차보험 실무 도구</div>
+      <div class="section-desc">비교견적 · 과실비율 · 할인할증 · 합의금 관련 공식 사이트</div>
+    </div>
+    <div class="links-grid" id="grid-auto"></div>
+  </div>
+
+  <!-- 교육자료 -->
+  <div class="section" id="sec-edu">
+    <div class="section-header">
+      <div class="section-title">&#128218; 교육 · 자격 자료실</div>
+      <div class="section-desc">협회 · 연수원 · 감독원 공식 출처만 큐레이션</div>
+    </div>
+    <div class="links-grid" id="grid-edu"></div>
+    <div class="calc-info-box">
+      <strong>등록 · 보수교육 안내</strong><br>
+      각 보험사 · 대리점 소속 설계사의 법정 의무 교육은 <strong>보험연수원(KIT)</strong>과
+      <strong>협회 e-Campus</strong>를 통해 이수할 수 있습니다.
+      시행령 개정 · 시험 일정 변경은 협회 공지사항을 참고하세요.
+    </div>
+  </div>
+
   <div class="section" id="sec-links"><div class="links-grid" id="grid-links"></div></div>
 </main>
 
@@ -199,72 +324,72 @@
 const C = [
   // === 손해보험 (13) ===
   {c:"damage",n:"삼성화재",b:"edge",l:"https://erp.samsungfire.com/",
-   logo:"logos/samsung-fire.png",
+   logo:"logos/samsung-fire.png",pdf:"claim-forms/samsung-fire.pdf",
    tel:"1588-5114",incall:"1566-0553",help:"1899-5005",fax:"0505-162-0872"},
   {c:"damage",n:"메리츠화재",b:"edge",l:"http://sales.meritzfire.com/",
-   logo:"logos/meritz-fire.png",
+   logo:"logos/meritz-fire.png",pdf:"claim-forms/meritz.pdf",
    tel:"1566-7711",incall:"1577-7711",help:"02-3786-2777",fax:"0505-021-3400"},
   {c:"damage",n:"DB손해보험",b:"chrome",l:"https://www.mdbins.com/",
-   logo:"logos/db-fire.png",
+   logo:"logos/db-fire.png",pdf:"claim-forms/db.pdf",
    tel:"1588-0100",incall:"1566-0757",help:"02-2262-1241",fax:"0505-181-4862"},
   {c:"damage",n:"KB손해보험",b:"chrome",l:"https://nsales.kbinsure.co.kr/eus/ch/ch_index.jsp",
-   logo:"logos/kb-fire.png",
+   logo:"logos/kb-fire.png",pdf:"claim-forms/kb.pdf",
    tel:"1544-0114",incall:"1544-0019",help:"1544-8119",fax:"0505-136-6500"},
   {c:"damage",n:"현대해상",b:"chrome",l:"https://sp.hi.co.kr/",
-   logo:"logos/hyundai.png",
+   logo:"logos/hyundai.png",pdf:"claim-forms/hyundai.pdf",
    tel:"1588-5656",incall:"1577-3223",help:"02-2628-4567",fax:"0507-774-6060"},
   {c:"damage",n:"한화손해보험",b:"edge",l:"http://portal.hwgeneralins.com/",
-   logo:"logos/hanwha-fire.png",
+   logo:"logos/hanwha-fire.png",pdf:"claim-forms/hanwha-son.pdf",
    tel:"1566-8000",incall:"1670-1882",help:"1899-3899",fax:"0502-779-1004"},
   {c:"damage",n:"롯데손해보험",b:"edge",l:"http://lottero.lotteins.co.kr/",
-   logo:"logos/lotte-fire.png",
+   logo:"logos/lotte-fire.png",pdf:"claim-forms/lotte.pdf",
    tel:"1588-3344",incall:"1600-5182",help:"02-3455-3984",fax:"0507-333-9999"},
   {c:"damage",n:"흥국화재",b:"edge",l:"https://sales.heungkukfire.co.kr/",
-   logo:"logos/heungkuk-fire.png",
+   logo:"logos/heungkuk-fire.png",pdf:"claim-forms/heungkuk-son.pdf",
    tel:"1688-1688",incall:"1688-6997",help:"02-2119-5151",fax:"0504-800-0700"},
   {c:"damage",n:"하나손해보험",b:"chrome",l:"https://sfa.saleshana.com/index.html",
-   logo:"logos/hana-fire.png",
+   logo:"logos/hana-fire.png",pdf:"https://www.hanainsure.co.kr/w/customer/counselInquiry/downloadCenter",pdfLabel:"다운로드 센터",
    tel:"1566-3000",incall:"02-6299-6821",help:"02-6670-8110",fax:"0505-152-0698"},
   {c:"damage",n:"NH농협손해보험",b:"chrome",l:"https://ss.nhfire.co.kr/",
-   logo:"logos/nh-fire.png",
+   logo:"logos/nh-fire.png",pdf:"claim-forms/nh-son.pdf",
    tel:"1644-9000",incall:"1644-9600",help:"02-3786-8800",fax:"0505-060-7000"},
   {c:"damage",n:"AIG손해보험",b:"chrome",l:"https://ga.aig.co.kr/usrLogin.do",
-   logo:"logos/aig.png",
+   logo:"logos/aig.png",pdf:"claim-forms/aig.pdf",
    tel:"1544-2792",incall:"-",help:"02-3773-5114",fax:"02-2127-2308"},
   {c:"damage",n:"예별손해보험",b:"edge",l:"https://mganet.mggeneralins.com/",
    logo:"logos/yebyeol.png",
    tel:"1588-5959",incall:"1577-3777",help:"02-3788-2261",fax:"0505-088-1646"},
   {c:"damage",n:"라이나손해보험",b:"chrome",l:"https://ga.linagi.com/html/gap/GA/GAZ911M0.html",
-   logo:"logos/lina-fire.png",
+   logo:"logos/lina-fire.png",pdf:"https://www.chubb.com/kr-kr/claims-service/claims-documents-forms.html",pdfLabel:"구비서류 · 양식",
    tel:"1566-5800",incall:"-",help:"-",fax:"02-2127-2308"},
 
   // === 생명보험 (21) ===
   {c:"life",n:"한화생명",b:"chrome",l:"https://hmp.hanwhalife.com/online/ga",
-   logo:"logos/hanwha-life.png",
+   logo:"logos/hanwha-life.png",pdf:"claim-forms/hanwha-life.pdf",
    tel:"1588-6363",incall:"1800-6633",help:"1522-6379",fax:"-"},
   {c:"life",n:"동양생명",b:"chrome",l:"http://1004.myangel.co.kr/",
-   logo:"logos/dongyang.png",
+   logo:"logos/dongyang.png",pdf:"claim-forms/dongyang.pdf",
    tel:"1577-1004",incall:"080-899-1004",help:"02-728-9900",fax:"02-3289-4517"},
   {c:"life",n:"교보생명",b:"edge",l:"https://ga.kyobo.com/",
-   logo:"logos/kyobo.png",
+   logo:"logos/kyobo.png",pdf:"claim-forms/kyobo.pdf",
    tel:"1588-1001",incall:"1588-1636",help:"02-721-3130",fax:"-"},
   {c:"life",n:"삼성생명",b:"edge",l:"https://connectplus.samsunglife.com:10443/gasso/login",
-   logo:"logos/samsung-life.png",
+   logo:"logos/samsung-life.png",pdf:"claim-forms/samsung-life.pdf",
    tel:"1588-3114",incall:"1588-3115",help:"02-311-4500",fax:"-"},
   {c:"life",n:"라이나생명",b:"edge",l:"https://ga.lina.co.kr/",
-   logo:"logos/lina-life.png",
+   logo:"logos/lina-life.png",pdf:"claim-forms/lina-life.pdf",
    tel:"1588-0058",incall:"1588-2442",help:"02-3781-2006",fax:"02-6944-1200"},
   {c:"life",n:"KDB생명",b:"chrome",l:"http://kss.kdblife.co.kr/",
-   logo:"logos/kdb.png",
+   logo:"logos/kdb.png",pdf:"claim-forms/kdb.pdf",
    tel:"1588-4040",incall:"1588-4040",help:"02-6303-2771",fax:"02-2669-6500"},
   {c:"life",n:"iM라이프",b:"chrome",l:"https://fgs.dgbfnlife.com:8443/",
    logo:"logos/im-life.png",
    tel:"1588-4770",incall:"1588-4770",help:"02-2087-9594",fax:"0505-083-5420"},
   {c:"life",n:"미래에셋생명",b:"edge",l:"http://www.loveageplan.com/",
-   logo:"logos/mirae.png",
+   logo:"logos/mirae.png",pdf:"claim-forms/miraeasset.pdf",
    tel:"1588-0220",incall:"1588-0220",help:"02-3271-5108",fax:"-"},
   {c:"life",n:"신한라이프",b:"chrome",l:"https://ga.shinhanlife.co.kr/",
-   logo:"logos/shinhan-life.png",
+   logo:"logos/shinhan-life.png",pdf:"claim-forms/shinhan.pdf",
    tel:"1588-5580",incall:"1522-2285",help:"02-3455-4119",fax:"-"},
   {c:"life",n:"KB라이프",b:"edge",l:"https://sfa.kblife.co.kr/",
    logo:"logos/kb-life.png",
@@ -276,16 +401,16 @@ const C = [
    logo:"logos/hana-life.png",
    tel:"1577-1112",incall:"1577-1112",help:"02-3709-8602~3",fax:"-"},
   {c:"life",n:"흥국생명",b:"chrome",l:"https://sales.heungkuklife.co.kr/",
-   logo:"logos/heungkuk-life.png",
+   logo:"logos/heungkuk-life.png",pdf:"claim-forms/heungkuk-life.pdf",
    tel:"1588-2288",incall:"1877-7006",help:"031-786-8088",fax:"-"},
   {c:"life",n:"ABL생명",b:"edge",l:"http://ga.abllife.co.kr/",
-   logo:"logos/abl.png",
+   logo:"logos/abl.png",pdf:"claim-forms/abl.pdf",
    tel:"1588-6500",incall:"1566-1002",help:"02-3787-8583",fax:"02-3299-5544"},
   {c:"life",n:"IBK연금보험",b:"edge",l:"https://sf.ibki.co.kr/",
    logo:"logos/ibk.png",
    tel:"1577-4117",incall:"02-2270-1661",help:"02-2270-1692",fax:"02-2270-1577"},
   {c:"life",n:"NH농협생명",b:"edge",l:"https://sfa.nhlife.co.kr:8443/",
-   logo:"logos/nh-life.png",
+   logo:"logos/nh-life.png",pdf:"claim-forms/nh-life.pdf",
    tel:"1544-4000",incall:"1544-4422",help:"02-3786-8800",fax:"02-6971-6040"},
   {c:"life",n:"메트라이프",b:"chrome",l:"http://metplus.metlife.co.kr/",
    logo:"logos/metlife.png",
@@ -294,30 +419,30 @@ const C = [
    logo:"logos/chubb-life.png",
    tel:"1599-4600",incall:"1599-4600",help:"1599-4646",fax:"02-3480-7801"},
   {c:"life",n:"푸본현대생명",b:"edge",l:"https://ez.fubonhyundai.com/",
-   logo:"logos/fubon.png",
+   logo:"logos/fubon.png",pdf:"claim-forms/pubon.pdf",
    tel:"1577-3311",incall:"-",help:"080-860-1212",fax:"0505-106-0311"},
   {c:"life",n:"BNP파리바카디프",b:"edge",l:"http://ga.cardif.co.kr/",
    logo:"logos/bnp.png",
    tel:"1688-1118",incall:"1688-1118",help:"1577-3435",fax:"-"},
   {c:"life",n:"AIA생명",b:"edge",l:"https://imap.aia.co.kr/",
-   logo:"logos/aia.png",
+   logo:"logos/aia.png",pdf:"claim-forms/aia.pdf",
    tel:"1588-9898",incall:"1588-2513",help:"1588-2937",fax:"02-2021-4540"},
 
   // === 공제조합 (5) ===
   {c:"mutual",n:"MG새마을금고",b:"edge",l:"https://insure.kfcc.co.kr/",
-   logo:"logos/saemaeul.png",
+   logo:"logos/saemaeul.png",pdf:"claim-forms/mg.pdf",
    tel:"1599-9000",incall:"-",help:"-",fax:"-"},
   {c:"mutual",n:"더케이(교직원공제회)",b:"edge",l:"https://www.ktcu.or.kr/index",
    logo:"logos/thek.png",
    tel:"1588-4110",incall:"-",help:"-",fax:"-"},
   {c:"mutual",n:"수협공제",b:"edge",l:"https://www.suhyup-bank.com/",
-   logo:"logos/suhyup.png",
+   logo:"logos/suhyup.png",pdf:"claim-forms/suhyup.pdf",
    tel:"1588-1515",incall:"-",help:"-",fax:"-"},
   {c:"mutual",n:"신협공제",b:"edge",l:"https://openbank.cu.co.kr/",
    logo:"logos/shinhyup.png",
    tel:"1544-3030",incall:"-",help:"-",fax:"-"},
   {c:"mutual",n:"우체국보험",b:"chrome",l:"https://epostlife.go.kr/MNDMDM0000.do",
-   logo:"logos/post.png",
+   logo:"logos/post.png",pdf:"claim-forms/post.pdf",
    tel:"1599-0100",incall:"-",help:"-",fax:"-"},
 
   // === 디지털/기타 (6) ===
@@ -344,16 +469,40 @@ const C = [
 const LINKS = [
   {n:"모든 전산 한눈에",u:"http://www.gasupport.co.kr/Gasys/mega/inc/pop_insuCon.asp",i:"&#128187;"},
   {n:"보험 원수사 전산매뉴얼",u:"https://drive.google.com/drive/folders/1Ia276-4vJ9eOw3OFvGiVyiGboObxXH61",i:"&#128218;"},
-  {n:"손해보험 협회",u:"https://isi.knia.or.kr/index.do",i:"&#127970;"},
-  {n:"생명보험 협회",u:"https://fp.insure.or.kr/",i:"&#127970;"},
-  {n:"보험연수원 교육",u:"https://is.in.or.kr/",i:"&#128218;"},
   {n:"실손24 (전산청구)",u:"https://www.silson24.or.kr/claim/web/",i:"&#128228;"},
   {n:"회사별 보험청구서 모음",u:"https://drive.google.com/drive/folders/14NoEN_jS2axMsuF-TzBFn7FFkbulJjJZ",i:"&#128203;"},
   {n:"질병코드 KCD 검색",u:"https://www.koicd.kr/",i:"&#128289;"},
   {n:"주요 건강지표 통계",u:"https://drive.google.com/drive/folders/1bslELrIX_9dC1_sTMJYGoss8xn1baWpq",i:"&#128200;"},
   {n:"상조회사 연락망",u:"http://www.koreasangjo.or.kr/",i:"&#128211;"},
-  {n:"할인/할증요인 조회",u:"https://kidi.or.kr/",i:"&#128270;"},
   {n:"건강보험공단",u:"https://www.nhis.or.kr/",i:"&#127973;"},
+  {n:"심평원 진료정보",u:"https://www.hira.or.kr/main.do",i:"&#129701;"},
+];
+
+// 자동차보험 실무
+const AUTO_LINKS = [
+  {n:"보험다모아 비교견적",d:"협회 운영 공식 비교 사이트",u:"https://e-insmarket.or.kr/",i:"&#128664;"},
+  {n:"할인 · 할증요인 조회시스템",d:"prem.kidi.or.kr:1443",u:"https://prem.kidi.or.kr:1443/",i:"&#128270;"},
+  {n:"보험개발원 KIDI 등록",d:"차량 · 통계 · 요율",u:"https://iics.kidi.or.kr/",i:"&#128202;"},
+  {n:"과실비율 정보포털",d:"accident.knia.or.kr",u:"https://accident.knia.or.kr/",i:"&#128679;"},
+  {n:"카드사 무이자 할부",d:"bss-a.co.kr",u:"https://www.bss-a.co.kr/",i:"&#128179;"},
+  {n:"자동차보험 과실비율 인정기준",d:"기준 PDF 자료",u:"https://accident.knia.or.kr/myaccident-content",i:"&#128196;"},
+];
+
+// 교육 자료
+const EDU_LINKS = [
+  {n:"생명보험협회 교육포털",d:"생보 자격 · 보수교육 안내 (klia.or.kr)",u:"https://edu.klia.or.kr/",i:"&#127979;"},
+  {n:"보험연수원 KIT",d:"등록 · 보수교육 주관 기관 (in.or.kr)",u:"https://is.in.or.kr/",i:"&#128218;"},
+  {n:"손해보험협회",d:"손보 자격 · 보수교육 공지 · 공시 (knia.or.kr)",u:"https://www.knia.or.kr/",i:"&#127970;"},
+  {n:"금융감독원 전자공시 e-공시",d:"보험 상품 · 재무 공시 검색 (fss.or.kr)",u:"https://www.fss.or.kr/",i:"&#127979;"},
+  {n:"보험개발원 KIDI",d:"요율 · 통계 · 연구 자료 (kidi.or.kr)",u:"https://www.kidi.or.kr/",i:"&#128202;"},
+  {n:"한국보험학회",d:"논문 · 세미나 등 학술 자료",u:"https://www.kinsurance.or.kr/",i:"&#128218;"},
+  {n:"보험다모아 (상품 비교)",d:"협회 운영 공식 비교 사이트",u:"https://e-insmarket.or.kr/",i:"&#128269;"},
+];
+
+// 펫보험 청구서
+const PET_CLAIMS = [
+  {n:"삼성화재 펫보험",u:"claim-forms/samsung-fire-pet.pdf",i:"&#128054;"},
+  {n:"현대해상 펫보험",u:"claim-forms/hyundai-pet.pdf",i:"&#128054;"},
 ];
 
 // ====== RENDER ======
@@ -361,6 +510,7 @@ function renderCard(d, i) {
   const bc = d.b === 'edge' ? 'edge' : 'chrome';
   const lc = d.b === 'edge' ? 'edge-link' : 'chrome-link';
   const bLabel = d.b === 'edge' ? 'Edge' : 'Chrome';
+  const pdfLabel = d.pdfLabel || '청구서 PDF';
   return `<div class="company-card" id="card-${i}" data-name="${d.n}" data-cat="${d.c}">
     <div class="browser-dot ${bc}" title="${bLabel} 전용"></div>
     <div class="card-logo">
@@ -376,8 +526,29 @@ function renderCard(d, i) {
       ${d.incall && d.incall !== '-' ? `<div class="detail-row"><span class="detail-label">인콜모니터링</span><span class="detail-value">${d.incall}</span></div>` : ''}
       ${d.help && d.help !== '-' ? `<div class="detail-row"><span class="detail-label">전산헬프데스크</span><span class="detail-value">${d.help}</span></div>` : ''}
       ${d.fax && d.fax !== '-' ? `<div class="detail-row"><span class="detail-label">팩스</span><span class="detail-value">${d.fax}</span></div>` : ''}
+      ${d.pdf ? `<a class="pdf-btn" href="${d.pdf}" target="_blank" rel="noopener" onclick="event.stopPropagation()">&#128209; ${pdfLabel}</a>` : ''}
     </div>
   </div>`;
+}
+
+function renderLinkCard(l) {
+  const desc = l.d ? `<div style="font-size:11px;color:var(--sub);margin-top:2px">${l.d}</div>` : '';
+  return `<a class="link-card" href="${l.u}" target="_blank" rel="noopener">
+    <div class="link-icon">${l.i}</div>
+    <div><div class="link-text">${l.n}</div>${desc}</div>
+  </a>`;
+}
+
+function renderClaimCard(d) {
+  if (!d.pdf) return '';
+  const label = d.pdfLabel || 'PDF 다운로드';
+  return `<a class="link-card" href="${d.pdf}" target="_blank" rel="noopener">
+    <div class="link-icon">&#128209;</div>
+    <div>
+      <div class="link-text">${d.n}</div>
+      <div style="font-size:11px;color:var(--sub);margin-top:2px">${label} · ${d.tel}${d.fax && d.fax !== '-' ? ' · FAX ' + d.fax : ''}</div>
+    </div>
+  </a>`;
 }
 
 function toggleCard(i) {
@@ -408,12 +579,12 @@ function filter() {
     });
     nr.classList.toggle('show', vis === 0 && q.length > 0);
   });
-  // Auto-switch tab if no results in current
-  if (q) {
-    const cats = ['damage','life','mutual','digital'];
+  // Auto-switch tab if no results in current (보험사 탭 내에서만)
+  const companyTabs = ['damage','life','mutual','digital'];
+  if (q && companyTabs.includes(currentTab)) {
     const cur = document.querySelectorAll('#grid-' + currentTab + ' .company-card:not([style*="none"])').length;
     if (cur === 0) {
-      for (const cat of cats) {
+      for (const cat of companyTabs) {
         if (document.querySelectorAll('#grid-' + cat + ' .company-card:not([style*="none"])').length > 0) {
           switchTab(cat); break;
         }
@@ -431,9 +602,94 @@ window.addEventListener('scroll', () => {
 ['damage','life','mutual','digital'].forEach(cat => {
   document.getElementById('grid-' + cat).innerHTML = C.filter(d => d.c === cat).map((d,i) => renderCard(d, C.indexOf(d))).join('');
 });
-document.getElementById('grid-links').innerHTML = LINKS.map(l =>
-  `<a class="link-card" href="${l.u}" target="_blank" rel="noopener"><div class="link-icon">${l.i}</div><span class="link-text">${l.n}</span></a>`
+document.getElementById('grid-links').innerHTML = LINKS.map(renderLinkCard).join('');
+
+// 청구서 PDF 섹션 렌더링
+document.getElementById('grid-claims-damage').innerHTML =
+  C.filter(d => d.c === 'damage' && d.pdf).map(renderClaimCard).join('');
+document.getElementById('grid-claims-life').innerHTML =
+  C.filter(d => d.c === 'life' && d.pdf).map(renderClaimCard).join('');
+document.getElementById('grid-claims-mutual').innerHTML =
+  C.filter(d => d.c === 'mutual' && d.pdf).map(renderClaimCard).join('');
+document.getElementById('grid-claims-pet').innerHTML = PET_CLAIMS.map(p =>
+  `<a class="link-card" href="${p.u}" target="_blank" rel="noopener">
+    <div class="link-icon">${p.i}</div>
+    <div><div class="link-text">${p.n}</div><div style="font-size:11px;color:var(--sub);margin-top:2px">PDF 다운로드</div></div>
+  </a>`
 ).join('');
+
+// 자동차 · 교육 섹션 렌더링
+document.getElementById('grid-auto').innerHTML = AUTO_LINKS.map(renderLinkCard).join('');
+document.getElementById('grid-edu').innerHTML = EDU_LINKS.map(renderLinkCard).join('');
+
+// ====== 보험나이 계산기 ======
+function calculateInsuranceAge() {
+  const birthStr = document.getElementById('birthInput').value;
+  const baseStr = document.getElementById('baseInput').value;
+  const ageEl = document.getElementById('resultAge');
+  const detailEl = document.getElementById('resultDetail');
+  const extraEl = document.getElementById('calcExtra');
+
+  if (!birthStr || !baseStr) {
+    ageEl.textContent = '-';
+    detailEl.textContent = '생년월일과 기준일을 입력하세요';
+    extraEl.innerHTML = '';
+    return;
+  }
+
+  const birth = new Date(birthStr);
+  const base = new Date(baseStr);
+  if (base < birth) {
+    ageEl.textContent = '-';
+    detailEl.textContent = '기준일이 생년월일보다 이전입니다';
+    extraEl.innerHTML = '';
+    return;
+  }
+
+  // 만 나이 계산
+  let age = base.getFullYear() - birth.getFullYear();
+  const m = base.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && base.getDate() < birth.getDate())) age--;
+
+  // 직전 생일 날짜 계산
+  let lastBirth = new Date(base.getFullYear(), birth.getMonth(), birth.getDate());
+  if (lastBirth > base) lastBirth = new Date(base.getFullYear() - 1, birth.getMonth(), birth.getDate());
+
+  // 다음 생일
+  const nextBirth = new Date(lastBirth.getFullYear() + 1, birth.getMonth(), birth.getDate());
+
+  // 6개월 기준일
+  const sixMonthMark = new Date(lastBirth);
+  sixMonthMark.setMonth(sixMonthMark.getMonth() + 6);
+
+  // 경과 일수 / 남은 일수
+  const daysPassed = Math.floor((base - lastBirth) / (1000*60*60*24));
+  const daysLeft = Math.floor((nextBirth - base) / (1000*60*60*24));
+
+  const sixMonthPassed = base >= sixMonthMark;
+  const insuranceAge = sixMonthPassed ? age + 1 : age;
+
+  ageEl.textContent = insuranceAge;
+  detailEl.textContent = sixMonthPassed
+    ? `만 ${age}세 · 직전 생일로부터 6개월 이상 경과 → +1`
+    : `만 ${age}세 · 직전 생일로부터 6개월 미만 → 그대로`;
+
+  const fmt = (d) => d.toISOString().split('T')[0];
+  extraEl.innerHTML = `
+    <strong>계산 근거</strong><br>
+    · 만 나이: <strong>${age}세</strong><br>
+    · 직전 생일: ${fmt(lastBirth)}<br>
+    · 6개월 기준일: ${fmt(sixMonthMark)}<br>
+    · 다음 생일: ${fmt(nextBirth)}<br>
+    · 직전 생일로부터 경과: <strong>${daysPassed}일</strong><br>
+    · 다음 생일까지 남은: ${daysLeft}일<br>
+    · 판정: ${sixMonthPassed ? '경과일 ≥ 6개월 → 보험나이 = 만나이 + 1' : '경과일 &lt; 6개월 → 보험나이 = 만나이'}
+  `;
+}
+document.getElementById('birthInput').addEventListener('change', calculateInsuranceAge);
+document.getElementById('baseInput').addEventListener('change', calculateInsuranceAge);
+// Set default base date to today
+document.getElementById('baseInput').value = new Date().toISOString().split('T')[0];
 </script>
 </body>
 </html>
